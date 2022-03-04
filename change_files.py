@@ -21,10 +21,14 @@ def get_image_path(dir):
     return image_path[0]
 
 for i in range(82):
-    shutil.copy(f'imou_highres/{i}.jpg', f'imou/{i}.jpg')
-    shutil.copy(f'imsty_highres/{i}.jpg', f'imsty/{i}.jpg')
-    shutil.copy(f'src_imgs_highres/{i}.jpg', f'src_imgs/{i}.jpg')
-    shutil.copy(f'imvq_highres/{i}.jpg', f'imvq/{i}.jpg')
+    # shutil.copy(f'imou_highres/{i}.jpg', f'imou/{i}.jpg')
+    # shutil.copy(f'imsty_highres/{i}.jpg', f'imsty/{i}.jpg')
+    # shutil.copy(f'src_imgs_highres/{i}.jpg', f'src_imgs/{i}.jpg')
+    # shutil.copy(f'imvq_highres/{i}.jpg', f'imvq/{i}.jpg')
+    for a in ['imou', 'imsty', 'src_imgs', 'imvq']:
+        img = Image.open(f'{a}/{i}.jpg').convert('RGB')
+        img = T.Resize(512)(img)
+        img.save(f'{a}/{i}.jpg')
 
 # i = 0
 # image_dirs = get_all_dirs(base_dir)
