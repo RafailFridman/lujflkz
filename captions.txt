@@ -6,7 +6,7 @@ dog with leopard texture
 knitted swan
 yellow brick road
 viking boat
-blue crystal swan
+crystal swan
 countryside at nighttime
 ocean at sunset
 giraffe with neck warmer
@@ -16,8 +16,8 @@ dog with leopard texture
 colorful stained glass giraffe
 foggy countryside at nighttime
 a woman wearing a black dress
-dalmatian
-blue crystal swan
+dalmatian dog
+crystal swan
 park at nighttime
 rusty jeep
 autumn countryside scene
