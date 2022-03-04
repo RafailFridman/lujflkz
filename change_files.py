@@ -1,8 +1,9 @@
 import os
 from PIL import Image
 import torchvision.transforms as T
+import shutil, os
 
-base_dir = 'comparisons/wild'
+base_dir = 'wild'
 
 
 def get_all_dirs(dir):
@@ -25,6 +26,7 @@ image_dirs = get_all_dirs(base_dir)
 command = ''
 for image_dir in image_dirs:
     src_image_path = get_image_path(image_dir)
+    shutil.copy(src_image_path, os.path.join('src_imgs', f'{i}.jpg'))
     # img = Image.open(src_image_path)
     # w, h = img.size
     # if min(w, h) > 512:
@@ -32,12 +34,25 @@ for image_dir in image_dirs:
     #     w, h = img.size
     for edit_prompt in get_all_edit_prompts(image_dir):
         dir = os.path.join(image_dir, edit_prompt)
-        image_path = [os.path.join(dir, f) for f in os.listdir(dir) if
-                      f.endswith('.png') or f.endswith('.jpg') or f.endswith('.jpeg')]
-        image_path = [f for f in image_path if 'styler' not in f and 'vqgan' not in f]
-        assert len(image_path) == 1
-        image_path = image_path[0]
-        os.rename(image_path, os.path.join(image_dir, edit_prompt, 'ours.png'))
+        ours = [os.path.join(dir, f) for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f)) and os.path.join(dir, f).endswith('png') and 'vqgan' not in f and 'styler' not in f][0]
+        # print(dir)
+        # exit()
+        os.rename(ours, os.path.join(dir, f'ours.png'))
+        # print(files)
+        # exit()
+        # print(dir)
+        # exit()
+        vqgan = os.path.join(dir, 'vqgan.png')
+        styler = os.path.join(dir, 'styler.png')
+        ours = os.path.join(dir, 'ours.png')
+        shutil.copy(vqgan, os.path.join('imvq', f'{i}.jpg'))
+        shutil.copy(styler, os.path.join('imsty', f'{i}.jpg'))
+        shutil.copy(ours, os.path.join('imou', f'{i}.jpg'))
+        # os.rename(vqgan, os.path.join('imvq', f'{i}.jpg'))
+        # os.rename(styler, os.path.join('imsty', f'{i}.jpg'))
+        # os.rename(ours, os.path.join('imou', f'{i}.jpg'))
+        i += 1
         # save_name = "_".join(edit_prompt.split())
         # output_path = os.path.join(image_dir, edit_prompt, 'vqgan.png')
         # os.rename(output_path, os.path.join(image_dir, edit_prompt, 'styler.png'))
+print(i+1)
