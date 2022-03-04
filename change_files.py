@@ -31,8 +31,13 @@ for image_dir in image_dirs:
     #     img = T.Resize(512)(img)
     #     w, h = img.size
     for edit_prompt in get_all_edit_prompts(image_dir):
+        dir = os.path.join(image_dir, edit_prompt)
         image_path = [os.path.join(dir, f) for f in os.listdir(dir) if
                       f.endswith('.png') or f.endswith('.jpg') or f.endswith('.jpeg')]
+        image_path = [f for f in image_path if 'styler' not in f and 'vqgan' not in f]
+        assert len(image_path) == 1
+        image_path = image_path[0]
+        os.rename(image_path, os.path.join(image_dir, edit_prompt, 'ours.png'))
         # save_name = "_".join(edit_prompt.split())
         # output_path = os.path.join(image_dir, edit_prompt, 'vqgan.png')
         # os.rename(output_path, os.path.join(image_dir, edit_prompt, 'styler.png'))
