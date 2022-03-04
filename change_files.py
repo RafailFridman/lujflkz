@@ -33,21 +33,22 @@ for image_dir in image_dirs:
     #     img = T.Resize(512)(img)
     #     w, h = img.size
     for edit_prompt in get_all_edit_prompts(image_dir):
-        dir = os.path.join(image_dir, edit_prompt)
-        ours = [os.path.join(dir, f) for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f)) and os.path.join(dir, f).endswith('png') and 'vqgan' not in f and 'styler' not in f][0]
+        command += edit_prompt + '\n'
+        # dir = os.path.join(image_dir, edit_prompt)
+        # ours = [os.path.join(dir, f) for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f)) and os.path.join(dir, f).endswith('png') and 'vqgan' not in f and 'styler' not in f][0]
         # print(dir)
         # exit()
-        os.rename(ours, os.path.join(dir, f'ours.png'))
+        # os.rename(ours, os.path.join(dir, f'ours.png'))
         # print(files)
         # exit()
         # print(dir)
         # exit()
-        vqgan = os.path.join(dir, 'vqgan.png')
-        styler = os.path.join(dir, 'styler.png')
-        ours = os.path.join(dir, 'ours.png')
-        shutil.copy(vqgan, os.path.join('imvq', f'{i}.jpg'))
-        shutil.copy(styler, os.path.join('imsty', f'{i}.jpg'))
-        shutil.copy(ours, os.path.join('imou', f'{i}.jpg'))
+        # vqgan = os.path.join(dir, 'vqgan.png')
+        # styler = os.path.join(dir, 'styler.png')
+        # ours = os.path.join(dir, 'ours.png')
+        # shutil.copy(vqgan, os.path.join('imvq', f'{i}.jpg'))
+        # shutil.copy(styler, os.path.join('imsty', f'{i}.jpg'))
+        # shutil.copy(ours, os.path.join('imou', f'{i}.jpg'))
         # os.rename(vqgan, os.path.join('imvq', f'{i}.jpg'))
         # os.rename(styler, os.path.join('imsty', f'{i}.jpg'))
         # os.rename(ours, os.path.join('imou', f'{i}.jpg'))
@@ -56,3 +57,5 @@ for image_dir in image_dirs:
         # output_path = os.path.join(image_dir, edit_prompt, 'vqgan.png')
         # os.rename(output_path, os.path.join(image_dir, edit_prompt, 'styler.png'))
 print(i+1)
+with open('captions_imgs.txt', 'w') as f:
+    f.write(command)
